@@ -1,0 +1,18 @@
+<launch>
+
+    <arg name="debug" default="0"/>
+    <arg name="mode" default="default"/>
+    <arg name="namespace" default="sam"/>
+    <arg name="odom_topic" default="/$(arg namespace)/dr/odom" />
+    <arg name="gps_odom_topic" default="/$(arg namespace)/dr/gps_odom"/>
+
+    <node name="gps_pose_pub" pkg="gps_probe" type="gps_node.py" respawn="true" output="screen">
+        <param name="gps_topic" value="fix" />
+        <param name="map_frame" value="map" />
+        <param name="utm_frame" value="utm" />
+        <param name="gps_frame" value="$gps_link" />
+        <param name="gps_odom_topic" value="$(arg gps_odom_topic)" />
+    </node>
+
+
+</launch>
