@@ -1,0 +1,25 @@
+<launch>
+
+    <arg name="debug" default="0"/>
+    <arg name="mode" default="default"/>
+    <arg name="namespace" default="sam"/>
+    <arg name="odom_topic" default="/$(arg namespace)/dr/odom" />
+    <arg name="gps_odom_topic" default="/$(arg namespace)/dr/gps_odom"/>
+
+    <arg name="port" default="/dev/ttyACM0"/>
+
+    <group ns="$(arg namespace)">
+
+
+        <node name="nmea_serial_driver" pkg="nmea_navsat_driver" type="nmea_serial_driver" output="screen">
+            <param name="port" value="$(arg port)" />
+            <param name="_baud" value="38400" />
+        </node>
+
+        <node name="buoy_tf_pub" pkg="gps_probe" type="buoy_tf_pub.py" respawn="true" output="screen">
+        </node>
+
+    </group>
+
+
+</launch>
